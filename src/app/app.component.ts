@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  ValidatorFn,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -13,10 +13,11 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  status: string[] = ['Stable', 'Critical', 'Finished'];
+  status: string[];
   signupForm: FormGroup;
 
   ngOnInit(): void {
+    this.status = ['Stable', 'Critical', 'Finished'];
     this.signupForm = new FormGroup({
       projectData: new FormGroup({
         name: new FormControl(
@@ -26,13 +27,13 @@ export class AppComponent implements OnInit {
         ),
         email: new FormControl(null, [Validators.required, Validators.email]),
       }),
-      projectStatus: new FormControl(this.status[1]),
+      projectStatus: new FormControl(null),
     });
   }
 
   forbiddenProjectNames(
     control: FormControl
-  ): Promise<ValidatorFn> | Observable<ValidatorFn> {
+  ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     return new Promise<any>((resolve, reject) => {
       setTimeout(() => {
         control.value.trim().toLowerCase() === 'test'
@@ -44,7 +45,7 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signupForm.value);
-    this.signupForm.reset({ projectStatus: this.status[1] });
+    this.signupForm.reset();
   }
 
   get projectName() {
