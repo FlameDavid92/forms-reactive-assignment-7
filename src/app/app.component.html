@@ -39,7 +39,7 @@
             </span>
           </span>
 
-          <label for="email">email</label>
+          <label for="email">Email:</label>
           <input
             type="text"
             id="email"
@@ -63,11 +63,16 @@
             </span>
           </span>
         </div>
-        <div class="radio" *ngFor="let st of status">
-          <label>
-            <input type="radio" formControlName="projectStatus" [value]="st" />
-            {{ st }}
-          </label>
+        <div class="form-group">
+          <label for="status">Project status:</label>
+          <select
+            name="status"
+            id="status"
+            formControlName="projectStatus"
+            class="form-control"
+          >
+            <option *ngFor="let st of status" [value]="st">{{ st }}</option>
+          </select>
         </div>
         <span class="help-block" *ngIf="!signupForm.valid && signupForm.touched"
           >Please enter valid data!
