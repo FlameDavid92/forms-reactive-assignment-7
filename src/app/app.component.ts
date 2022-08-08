@@ -13,11 +13,10 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  status: string[];
+  status: string[] = ['Stable', 'Critical', 'Finished'];
   signupForm: FormGroup;
 
   ngOnInit(): void {
-    this.status = ['Stable', 'Critical', 'Finished'];
     this.signupForm = new FormGroup({
       projectData: new FormGroup({
         name: new FormControl(
@@ -27,7 +26,7 @@ export class AppComponent implements OnInit {
         ),
         email: new FormControl(null, [Validators.required, Validators.email]),
       }),
-      projectStatus: new FormControl(null),
+      projectStatus: new FormControl(this.status[1]),
     });
   }
 
@@ -45,7 +44,7 @@ export class AppComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signupForm.value);
-    this.signupForm.reset();
+    this.signupForm.reset({ projectStatus: this.status[1] });
   }
 
   get projectName() {
